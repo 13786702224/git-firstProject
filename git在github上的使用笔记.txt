@@ -1,0 +1,23 @@
+1.在github上创建新项目:
+	new repository -->Repository name -->description -->publice/private(公开或私有) -->添加readme文件(Initialize this repository with a README)
+
+	commit 在github上的意思 动词 做一个版本 名词版本
+
+2.改版 createfile -->文件名 -->输入内容 -->内容提示(做的改动) -->详细的说明(可选) -->选项 (Commit directly to the master branch. 直接提交到master分支/Create a new branch for this commit and start a pull request. Learn more about pull requests.)    
+
+   版本号(40位的16进制数): 564651bdc46973bfacec9b08056eef4f667f127e
+   github在提交一个版本时会保存该版本父版本(也就是上一个版本) 这样就会形成一个版本历史线
+
+3.客户端的github
+
+
+git命令:  git init 初始化本地仓库
+          git clone 克隆仓库地址到本地
+          git status 查看状态
+          git add 文件名  提交文件到暂存区
+          git commit -m "修改说明" 提交到工作区
+          git push 提交到github  需输入用户名和密码
+
+ github:open in Desktop
+ 		自动调起github客户端
+
