@@ -18,6 +18,7 @@ git命令:  git init 初始化本地仓库
           git commit -m "修改说明" 提交到工作区
           git push 提交到github  需输入用户名和密码
 
+          修改了文件内容 重新推送该文件  并更新github  git add 文件 -->git commit -m "说明" -->git push
  github:open in Desktop
  		自动调起github客户端
 
