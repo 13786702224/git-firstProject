@@ -21,3 +21,4 @@ git命令:  git init 初始化本地仓库
  github:open in Desktop
  		自动调起github客户端
 
+ .gitignore  忽略以什么结尾的文件
