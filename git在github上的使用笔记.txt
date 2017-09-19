@@ -11,14 +11,21 @@
 3.客户端的github
 
 
-git命令:  git init 初始化本地仓库
-          git clone 克隆仓库地址到本地
-          git status 查看状态
-          git add 文件名  提交文件到暂存区
-          git commit -m "修改说明" 提交到工作区
-          git push 提交到github  需输入用户名和密码
+git命令:  
+        git config --global user.name "westbrook-ding"
+        git config --global user.email '374246427@qq.com'
+        git config -global 参数 有了这个参数,表示你这台机器上所有的Git仓库都会使用这个配置 当然你也可以对某个仓库指定不同的用户名和邮箱
+        git只能跟踪文本文件的改动,比如txt文件,网页，所有程序的代码 图片、视频等二进制文件，虽然也能由版本控制系统管理,但没法跟踪文件的变化,只能知道大小从1kb到2kb,不知道具体改了啥
+        
+        git init 初始化本地仓库
+        git clone 克隆仓库地址到本地
+        git status 查看状态
+        git add 文件名  提交文件到暂存区
+        git commit -m "修改说明" 提交到工作区
+        git push 提交到github  需输入用户名和密码
 
-          修改了文件内容 重新推送该文件  并更新github  git add 文件 -->git commit -m "说明" -->git push
+        修改了文件内容 重新推送该文件  并更新github  git add 文件 -->git commit -m "说明" -->git push
+
  github:open in Desktop
  		自动调起github客户端
 
