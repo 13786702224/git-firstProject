@@ -9,24 +9,104 @@
    github在提交一个版本时会保存该版本父版本(也就是上一个版本) 这样就会形成一个版本历史线
 
 3.客户端的github
+github:open in Desktop
+    自动调起github客户端
 
+ .gitignore  忽略以什么结尾的文件
 
 git命令:  
         git config --global user.name "westbrook-ding"
         git config --global user.email '374246427@qq.com'
         git config -global 参数 有了这个参数,表示你这台机器上所有的Git仓库都会使用这个配置 当然你也可以对某个仓库指定不同的用户名和邮箱
         git只能跟踪文本文件的改动,比如txt文件,网页，所有程序的代码 图片、视频等二进制文件，虽然也能由版本控制系统管理,但没法跟踪文件的变化,只能知道大小从1kb到2kb,不知道具体改了啥
-        
+
         git init 初始化本地仓库
         git clone 克隆仓库地址到本地
         git status 查看状态
+        git diff 文件名    查看该文件所做的修改
         git add 文件名  提交文件到暂存区
-        git commit -m "修改说明" 提交到工作区
+        git commit -m "修改说明" 把暂存区的所有内容提交到当前分支
         git push 提交到github  需输入用户名和密码
 
-        修改了文件内容 重新推送该文件  并更新github  git add 文件 -->git commit -m "说明" -->git push
+        一.修改了文件内容 重新推送该文件  并更新github  git add 文件 -->git commit -m "说明" -->git push 
 
- github:open in Desktop
- 		自动调起github客户端
+        二.版本回退
+         git log 查看历史记录 历史版本 (可以查看每一次提交的版本号以及具体做了哪些修改) 
+         git log –pretty=oneline 简化版本历史显示 
+         git reset --hard HEAD^ 回退到上一个版本 
+         git reset --hard HEAD^^ 回退到上上个版本
+         git reset --hard HEAD~100 回退到前100个版本
+         cat 文件名    查看文件内容 
+         关闭了命令行想回到最新版：
+         git reflog 获取到所有版本号 包括回退
+         git reset --hard 版本号(根据版本号回退,可任意回退)   回退到最新版
 
- .gitignore  忽略以什么结尾的文件
+        三.工作区和暂存区
+          工作区:电脑目录下(除.git文件夹外),包括新建的文件
+          版本库:.git文件夹 里面包含stage(暂存区)还有git帮我们自动创建了第一个分支master,以及指向master分支的指针HEAD
+          可以同过git add 分别提交多个文件  然后用git commit 一起提交
+
+        四.撤销修改和删除文件操作
+           1.撤销修改 在未提交之前修改的两种方法：1.手动修改 然后git add  git commit  2.回退到上一个版本 git reset --hard HEAD^
+           最好的办法 git checkout -- 1.txt  撤销修改   (提交之后无法撤销了)
+           2.删除文件 
+            新建了一个文件test.txt 并且add 和commit了  想删除？
+             a.手动删除
+             b.rm test.txt 删除后 然后commit是永久删除 无法恢复
+            删除文件后又想恢复(没有进行commit) 
+            git checkout test.txt  恢复文件
+
+        五.远程仓库
+          本地git仓库与远程github仓库传输是SSH加密的
+          1.第一步创建SSH key     ssh-keygen  -t rsa –C "374246427@qq.com"  administrator/.ssh                      目录下有两个文件id_rsa 和id_rsa.pub  id_rsa是私钥 不可以泄露  id_rsa.pub是公钥
+           第二步登录github 打开setting 里的SSHkey -->New SSH key -->随意填写title -->复制id_rsa.pub中的内容到key -->Add key
+
+          2.本地git仓库与远程github仓库同步
+            在github上新建一个空的仓库 -->git remote add origin https://github.com/tugenhua0707/testgit.git(github空仓库地址) -->把本地库的内容推送到远程 git push命令 实际上上是把当前master分支内容推送到远程仓库  git push -u origin master  第一个次加 -u   以后修改后直接 git push origin master
+
+          3.克隆远程库到本地
+            在本地新建一个空目录 git bash到此目录 -->git clone + 远程仓库地址
+
+        六.创建与合并分支
+          HEAD指向当前分支 主分支master master指向提交
+          git checkout dev 切换到dev分支
+          git branch dev 创建dev分支
+          git branch    查看分支 当前分支会有一个※号
+          git checkout -b dev 创建并切换到dev分支
+          git merge dev 在当前分支上合并dev分支   (Fast-forward 快进模式 直接把master指向dev的当前提交)
+          git branch -d dev 删除dev分支 (合并完之后可以删除了)
+
+          解决代码冲突:
+           fengzhi1 1.txt 添加一行88888内容 master分支  1.txt同样也添加了一行99999的内容 这是会产生冲突  
+           解决冲突:在1.txt文件中上修改统一的999999内容  然后重新git add  1.txt -->git commit 
+
+          分支管理策略：git merge --no-ff -m "注释" dev 合并dev分支 --no-ff表示禁用fast forward    Fast forward模式删除分支信息后会丢失分支信息 
+
+          分支策略：首先master主分支应该是非常稳定的,也就是用来发布新版本,一般情况下不允许在上面干活,干活一般情况下在新建的dev分支上干活,干完后,比如上要发布,或者说dev分支代码稳定后可以合并到主分支master上来
+
+        七.bug分支:
+          git stash 将当前的工作现场引藏起来 然后去处理bug 在master分支上创建issue-404 bug分支 解决bug后合并分支并删除bug分支  然后切换到dev分支 
+          git stash list 查看工作现场 
+          git stash apply 恢复  但是stash内容 需要git stash drop来删除 
+          直接通过git stash drop来恢复和删除 继续工作
+
+        八.多人协作：当你从远程克隆时候,实际上git自动把本地master分支和远程的master分支对应起来了,并且远程库的默认名称是origin
+        git remote 查看远程库的信息
+        git remote -v 查看远程库的详细信息 fetch抓取  push推送
+        推送分支:git push origin +分支名称   master和dev分支保持与github同步  bug等其他分支不必推送到github修复完之后合并到master分支再推送到远程github
+        抓取分支: 另一个小伙伴克隆一份到他的电脑  克隆只是master分支 需要获取dev分支  
+                  git checkout -b dev origin/dev 创建远程的dev分支到本地来  小伙伴可以在dev上做修改了
+                  小伙伴修改玩之后  git push origin dev 将当前的dev分支推送到远程
+          我同样推送了同一位置的修改 产生冲突  首先抓取从origin/dev抓取最新的提交 git pull 
+          git pull 失败  原因是没有指定本地dev分支与远程origin/dev分支的链接   通过 git branch --set-upstream-to=origin/<branch> dev
+          修改完冲突后 再次提交到远程
+
+          因此：多人协作工作模式一般是这样的：
+             1.首先,可以试图用git push origin branch-name 推送自己的修改
+             2.如果推送失败,则因为远程分支比你的本地更新早,需要先用git pull 试图合并
+             3.如果有冲突，则需要解决冲突，并在本地提交。再用git push origin branch-name推送
+ 
+ https://github.com/overtrue/laravel-wechat 微信公众号
+
+
+
