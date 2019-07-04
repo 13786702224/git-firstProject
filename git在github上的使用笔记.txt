@@ -18,6 +18,7 @@ git命令:
         git config --global user.name "westbrook-ding"
         git config --global user.email '374246427@qq.com'
         git config -global 参数 有了这个参数,表示你这台机器上所有的Git仓库都会使用这个配置 当然你也可以对某个仓库指定不同的用户名和邮箱
+        git config --list 查看用户信息
         git只能跟踪文本文件的改动,比如txt文件,网页，所有程序的代码 图片、视频等二进制文件，虽然也能由版本控制系统管理,但没法跟踪文件的变化,只能知道大小从1kb到2kb,不知道具体改了啥
 
         git init 初始化本地仓库
